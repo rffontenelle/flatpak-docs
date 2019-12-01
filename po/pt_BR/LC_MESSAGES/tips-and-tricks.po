@@ -1,0 +1,166 @@
+# Brazilian Portuguese translation for tips-and-tricks
+# Copyright (C) 2017, 2018, Flatpak Team. Licensed under Creative Commons
+# Attribution 4.0 International License.
+# This file is distributed under the same license as the Flatpak package.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Flatpak \n"
+"Report-Msgid-Bugs-To: https://github.com/flatpak/flatpak-docs/issues\n"
+"POT-Creation-Date: 2019-11-30 04:28-0300\n"
+"PO-Revision-Date: 2019-12-01 19:02-0300\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 3.32.0\n"
+
+#: ../../tips-and-tricks.rst:2
+msgid "Tips and Tricks"
+msgstr "Dicas e truques"
+
+#: ../../tips-and-tricks.rst:4
+msgid "This page explains a few useful features of the Flatpak CLI."
+msgstr "Esta página explica alguns recursos úteis da CLI do Flatpak."
+
+#: ../../tips-and-tricks.rst:8
+msgid "Testing an app with a different runtime"
+msgstr "Testando um aplicativo com um runtime diferente"
+
+#: ../../tips-and-tricks.rst:10
+msgid ""
+"You can (for testing) run an application with a different runtime than it "
+"typically uses.  For instance, to run stable gedit with the latest unstable "
+"gnome runtime you can do::"
+msgstr ""
+"Você pode (para testar) executar um aplicativo com um runtime diferente do "
+"que normalmente usa. Por exemplo, para executar o gedit estável com o ultimo "
+"runtime instável do GNOME, você pode::"
+
+#: ../../tips-and-tricks.rst:16
+msgid ""
+"You can also use a completely different runtime (but same version number)::"
+msgstr ""
+"Você também pode usar um runtime completamente diferente (mas o mesmo número "
+"de versão)::"
+
+#: ../../tips-and-tricks.rst:20
+msgid ""
+"If you just want to use the sdk instead of the platform like the above, a "
+"better approach is to use ``-d``."
+msgstr ""
+"Se você deseja apenas usar o sdk em vez da plataforma como a acima, uma "
+"abordagem melhor é usar ``-d``."
+
+#: ../../tips-and-tricks.rst:25
+msgid ""
+"Running against a runtime with a completely different ABI is undefined and "
+"unsupported behavior."
+msgstr ""
+"A execução em um runtime com uma ABI completamente diferente é um "
+"comportamento indefinido e sem suporte."
+
+#: ../../tips-and-tricks.rst:29
+msgid "Downgrading"
+msgstr "Fazendo downgrade"
+
+#: ../../tips-and-tricks.rst:31
+msgid ""
+"It is possible to downgrade an installed application (or runtime) to an "
+"older build."
+msgstr ""
+"É possível fazer o downgrade de um aplicativo instalado (ou runtime) para "
+"uma compilação mais antiga."
+
+#: ../../tips-and-tricks.rst:34
+msgid "First you look for the commit you are interested in::"
+msgstr "Primeiro você procura o commit no qual está interessado::"
+
+#: ../../tips-and-tricks.rst:38
+msgid "Then you deploy the commit::"
+msgstr "Então, você implanta o commit::"
+
+#: ../../tips-and-tricks.rst:44
+msgid ""
+"If you have Flatpak 1.5.0 or later, you can also prevent the app from being "
+"included in updates (either manual or automatic)::"
+msgstr ""
+"Se você possui o Flatpak 1.5.0 ou posterior, também pode impedir que o "
+"aplicativo seja incluído nas atualizações (manuais ou automáticas)::"
+
+#: ../../tips-and-tricks.rst:51
+msgid "Bisecting regressions in application builds"
+msgstr "Dividindo regressões em compilações de aplicativos"
+
+#: ../../tips-and-tricks.rst:53
+msgid ""
+"In case the newest builds of an application introduce regressions, you can "
+"use ``flatpak-bisect`` to discover which commit introduced the regression. "
+"It works just like ``git bisect``."
+msgstr ""
+"Caso as versões mais recentes de um aplicativo introduzam regressões, você "
+"pode usar ``flatpak-bisect`` para descobrir qual commit introduziu a "
+"regressão. Funciona como ``git bisect``."
+
+#: ../../tips-and-tricks.rst:57
+msgid ""
+"In case your distribution doesn't install the ``flatpak-bisect`` utility, "
+"you can find it distributed alongside the Flatpak source code, in https://"
+"github.com/flatpak/flatpak/blob/master/scripts/flatpak-bisect"
+msgstr ""
+"Caso sua distribuição não instale o utilitário `` flatpak-bisect``, você "
+"poderá encontrá-lo distribuído juntamente com o código-fonte Flatpak, em "
+"https://github.com/flatpak/flatpak/blob/master/scripts/flatpak-bisect"
+
+#: ../../tips-and-tricks.rst:61
+msgid "First you update the application and get its history::"
+msgstr "Primeiro, você atualiza o aplicativo e obtém seu histórico::"
+
+#: ../../tips-and-tricks.rst:65
+msgid "Then, you should set the current commit as the first bad commit::"
+msgstr ""
+"Em seguida, você deve definir o commit atual como o primeiro commit "
+"incorreto::"
+
+#: ../../tips-and-tricks.rst:69
+msgid ""
+"Now you need to find the hash of the first known good commit. For that, you "
+"can see the build history by running::"
+msgstr ""
+"Agora você precisa encontrar o hash do primeiro bom commit conhecido. Para "
+"isso, você pode ver o histórico da compilação executando::"
+
+#: ../../tips-and-tricks.rst:74
+msgid "To start bisecting, checkout the first known good commit you find::"
+msgstr ""
+"Para começar a dividir, faça o checkout do primeiro commit conhecido que "
+"você encontrar::"
+
+#: ../../tips-and-tricks.rst:78
+msgid ""
+"After setting the bad commit and the first known good commit, you can launch "
+"the application to verify if the current commit in the bisecting session is "
+"a good or a bad one."
+msgstr ""
+"Após definir o commit incorreto e o primeiro commit válido, é possível "
+"iniciar o aplicativo para verificar se o commit atual na sessão de divisão é "
+"bom ou ruim."
+
+#: ../../tips-and-tricks.rst:82
+msgid "To mark a commit as good or bad, run::"
+msgstr "Para marcar um commit como bom ou ruim, execute::"
+
+#: ../../tips-and-tricks.rst:86
+msgid "Or::"
+msgstr "Ou::"
+
+#: ../../tips-and-tricks.rst:90
+msgid "``flatpak-bisect`` will inform you when the first bad commit is found."
+msgstr ""
+"``flatpak-bisect`` vai lhe informar quando o primeiro commit ruim for "
+"encontrado."
