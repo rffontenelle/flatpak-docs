@@ -1,0 +1,80 @@
+name: Update translations
+
+on:
+  push:
+#  schedule:
+#    - cron: "*/15 * * * *" # each 15 min
+
+jobs:
+  update-translations:
+    name: Update translations in Zanata
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/setup-python@v1
+      
+      - name: Build and install Zanata CLI client ${{ env.ZNT_VERSION }}
+        run: |
+          wget https://github.com/zanata/zanata-python-client/archive/v${ZNT_VERSION}.tar.gz
+          echo "${ZNT_CHECKSUM} v${ZNT_VERSION}.tar.gz" | sha256sum --check --status
+          tar xf v${ZNT_VERSION}.tar.gz
+          cd zanata-python-client-${ZNT_VERSION}
+          python3 setup.py install --user --optimize=1
+          ${HOME}/.local/bin/zanata --version
+        env:
+          ZNT_VERSION: 1.5.3
+          ZNT_CHECKSUM: f7caae883d29e70e189b494d8b3681b90b1c2d9c31e1eea01930d8748f94580f
+
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install -U pip
+          pip install -U -r requirements.txt
+
+      - name: Pull translations
+        run: |
+          echo "[servers]
+          translate_zanata_org.url=https://translate.zanata.org/
+          translate_zanata_org.username=${ZANATA_USERNAME}
+          translate_zanata_org.key=${ZANATA_KEY}" > ~/.config/zanata.ini
+          ${HOME}/.local/bin/zanata pull
+        env:
+          ZANATA_USERNAME: ${{ secrets.ZATANA_USERNAME }}
+          ZANATA_KEY: ${{ secrets.ZATANA_KEY }}
+
+      - run: make -C po/ update-po
+
+      - name: zanata push
+        if: github.repository == 'flatpak/flatpak-docs'
+        run: ${HOME}/.local/bin/zanata push --push-type both
+
+      - name: Create or update translations pull request
+        id: cpr
+        uses: peter-evans/create-pull-request@v2
+        with:
+          path: po/
+#          commit-message: Update translations from Zanata
+#          committer: GitHub <noreply@github.com>
+#          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+#          title: Update translations
+#          body: |
+#            Note: _This Pull Request was created and is automatically updated
+#            with [create-pull-request][1] via G-A workflow "${GITHUB_WORKFLOW}"._
+#            
+#            [1] https://github.com/marketplace/actions/create-pull-request
+
+      - name: Check pull request output
+        run: |
+          echo "Pull Request Number - ${{ env.PULL_REQUEST_NUMBER }}"
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pr_number }}"
+
+      - run: make -C po/ html SPHINXOPTS="${ env.SPHINXOPTS }}"
+        env:
+          SPHINXOPTS: '--color -q -E --keep-going -W'
+
+      - name: Update translated docs as artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: translated-docs
+          path: docs/_build/

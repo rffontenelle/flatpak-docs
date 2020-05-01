@@ -7,7 +7,7 @@ jobs:
     name: Build documentation
     runs-on: ubuntu-latest
     env:
-      SPHINXOPTS: --color -q -E --keep-going -W
+      SPHINXOPTS: --color -q -E --keep-going
     
     steps:
       - uses: actions/cache@v1
@@ -25,7 +25,8 @@ jobs:
         run: |
           python3 -m pip install -U pip
           pip install -U -r requirements.txt
-      - run: make -C docs/ html SPHINXOPTS="${SPHINXOPTS}"
+      - run: make -C docs/ html SPHINXOPTS="${{ env.SPHINXOPTS }} -W"
+      - run: make -C po/ html SPHINXOPTS="${{ env.SPHINXOPTS }}"
       - name: Upload docs as artifacts
         uses: actions/upload-artifact@v2
         with:
